@@ -25,11 +25,9 @@ const { connect } = require('./db/connection');
   await db.collection('projects').deleteMany({});
   await db.collection('tasks').deleteMany({});
   await db.collection('notes').deleteMany({});
-  console.log('Inserted 4 projects...');
   // =============================================================================
-  //  console.log('Cleared existing data...');
+  console.log('Cleared existing data...');
 
-  // ==================== USERS ====================
   const hash1 = await bcrypt.hash('password123', 10);
   const hash2 = await bcrypt.hash('securepass456', 10);
 
@@ -79,7 +77,6 @@ const { connect } = require('./db/connection');
   const p4 = await db.collection('projects').insertOne({
     ownerId: userId2,
     name: 'Old Internship Tasks',
-    // no description — schema flexibility: description is optional
     archived: true,
     createdAt: new Date('2023-12-01')
   });
@@ -103,7 +100,7 @@ const { connect } = require('./db/connection');
       { title: 'Define objectives', done: true },
       { title: 'Submit to supervisor', done: true }
     ],
-    dueDate: new Date('2024-02-01'), // optional field — present on this task
+    dueDate: new Date('2024-02-01'),
     createdAt: new Date('2024-01-13')
   });
 
@@ -118,7 +115,7 @@ const { connect } = require('./db/connection');
       { title: 'Design ER diagram', done: true },
       { title: 'Implement in MongoDB', done: false }
     ],
-    dueDate: new Date('2024-03-15'), // optional field — present on this task
+    dueDate: new Date('2024-03-15'), 
     createdAt: new Date('2024-01-18')
   });
 
@@ -133,7 +130,7 @@ const { connect } = require('./db/connection');
       { title: 'Create wireframe', done: false },
       { title: 'Choose color palette', done: false }
     ],
-    // no dueDate — schema flexibility: dueDate omitted on this task
+
     createdAt: new Date('2024-01-22')
   });
 
@@ -149,7 +146,7 @@ const { connect } = require('./db/connection');
       { title: 'Summarize each paper', done: false },
       { title: 'Write review section', done: false }
     ],
-    dueDate: new Date('2024-04-01'), // optional field — present on this task
+    dueDate: new Date('2024-04-01'), 
     createdAt: new Date('2024-02-05')
   });
 
@@ -163,7 +160,7 @@ const { connect } = require('./db/connection');
     subtasks: [
       { title: 'Outline methodology', done: false }
     ],
-    // no dueDate — schema flexibility: dueDate omitted on this task
+
     createdAt: new Date('2024-02-10')
   });
 
@@ -172,7 +169,7 @@ const { connect } = require('./db/connection');
   // ==================== NOTES ====================
   await db.collection('notes').insertOne({
     ownerId: userId1,
-    projectId: projectId1, // attached to a project
+    projectId: projectId1, 
     title: 'Supervisor meeting notes',
     content: 'Discussed project scope and initial requirements with supervisor.',
     tags: ['meeting', 'important'],
@@ -216,10 +213,8 @@ const { connect } = require('./db/connection');
   });
 
   console.log('Inserted 5 notes...');
-  console.log('✅ Database seeded successfully!');
+  console.log(' Database seeded successfully!');
  
-
-  console.log('TODO: implement seed.js');
   process.exit(0);
 })();
 //
