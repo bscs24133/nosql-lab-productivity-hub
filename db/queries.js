@@ -70,7 +70,7 @@ async function signupUser(db, userData) {
  * Hint: findOne with an exact-match filter.
  */
 async function loginFindUser(db, email) {
- const user = await db.collection('users').findone({email:email});
+ const user = await db.collection('users').findOne({email:email});
  return user;
   //throw new Error('loginFindUser not implemented');
 }
@@ -91,7 +91,7 @@ async function loginFindUser(db, email) {
  * Hint: find with two filter conditions, then .sort().toArray().
  */
 async function listUserProjects(db, ownerId) {
-  const  projects =  await db.collection('project').find({
+  const  projects =  await db.collection('projects').find({
     ownerId : ownerId,
     archived: false
   }).sort({createdAt:-1}).toArray();
@@ -113,8 +113,15 @@ async function listUserProjects(db, ownerId) {
  * Hint: insertOne again — just remember to add the defaults yourself.
  */
 async function createProject(db, projectData) {
-  
-  throw new Error('createProject not implemented');
+  const result = await db.collection('projects').insertOne({
+    ownerId : projectData.ownerId,
+    name : projectData.name,
+    description : projectData.description || '',
+    archived : false,
+    createdAt : new Date()
+  });
+  return result;
+  //throw new Error('createProject not implemented');
 }
 
 /**
@@ -133,8 +140,12 @@ async function createProject(db, projectData) {
  * Hint: updateOne with the $set operator.
  */
 async function archiveProject(db, projectId) {
-  // TODO: implement
-  throw new Error('archiveProject not implemented');
+  const result = await db.collection('projects').updateOne(
+    { _id: projectId },
+    { $set: { archived: true } }
+  );
+  return result;
+  //throw new Error('archiveProject not implemented');
 }
 
 /**
