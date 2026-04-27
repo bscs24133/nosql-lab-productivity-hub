@@ -329,7 +329,7 @@ async function toggleSubtask(db, taskId, subtaskTitle, newDone) {
 
 /**
  * Query 12: deleteTask
- * -------------------------------------------------------------
+ * ------------------------------------------------------------- 
  * Permanently delete a task.
  *
  * @param {Db} db
@@ -339,8 +339,10 @@ async function toggleSubtask(db, taskId, subtaskTitle, newDone) {
  * Hint: deleteOne.
  */
 async function deleteTask(db, taskId) {
-  // TODO: implement
-  throw new Error('deleteTask not implemented');
+  const result = await db.collection('tasks').deleteOne({ _id: taskId });
+  return result;
+  
+  //throw new Error('deleteTask not implemented');
 }
 
 /**
